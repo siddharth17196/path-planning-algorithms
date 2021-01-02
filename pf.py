@@ -152,5 +152,5 @@ if __name__ == '__main__':
 	plt.ylim(0,30)
 	plt.legend()
 	plt.title('Configuration Space')
-	# plt.savefig("pf.png")
+	plt.savefig("./images/apf.png")
 	plt.show()

@@ -132,5 +132,5 @@ if __name__ == '__main__':
 		plt.ylim(0,30)
 		plt.legend()
 		plt.title('Configuration Space')
-		# plt.savefig("bi_rrt.png")
+		plt.savefig("./images/bi_rrt.png")
 		plt.show()
