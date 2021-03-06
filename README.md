@@ -1,4 +1,4 @@
-# path planning algorithms
+# Path planning algorithms
  
 ## Bi-RRT
 Creates random trees simulatneously from both, the start and goal.
