@@ -106,7 +106,7 @@ def main(grid_size, func, ETA, K):
 	Plotting
 	"""
 	figure, axes = plt.subplots()
-	plt.rcParams["figure.figsize"] = (20,20)
+	plt.rcParams["figure.figsize"] = (15,15)
 
 	# plotting the obstacles
 	for obs in obslist:
@@ -145,7 +145,7 @@ if __name__ == '__main__':
 						help='Repuslive Potential Gain; Default=5000', default=5000)
 	args = parser.parse_args()
 
-	
+
 	grid_size = args.grid
 	func = args.function
 	K = args.attractive

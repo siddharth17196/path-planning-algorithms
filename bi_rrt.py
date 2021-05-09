@@ -70,7 +70,7 @@ def merge(tree1, tree2):
 	return path
 
 def main(max_iter):
-	global obslist	
+	global obslist
 	obslist = [(4.5, 3, 2), (3, 12, 2), (15, 15, 3)]  #[(x, y, radius)]
 	start_node = Node(1,1)
 	start_node.path_so_far.append(start_node)
@@ -88,7 +88,7 @@ def main(max_iter):
 	"""
 	if path:
 		figure, axes = plt.subplots()
-		plt.rcParams["figure.figsize"] = (20,20)
+		plt.rcParams["figure.figsize"] = (15,15)
 
 		# plotting the obstacles
 		for obs in obslist:
