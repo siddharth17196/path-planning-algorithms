@@ -34,7 +34,7 @@ def repulsive_potential(x, y, K_rep):
 	else:
 		return 0
 
-def get_potential_matrix(start, goal, grid_size, params, func, minx=0, maxx=30):
+def get_potential_matrix(goal, grid_size, params, func, minx=0, maxx=30):
 	global obslist
 	min_x = min_y = minx
 	max_x = max_y = maxx
@@ -56,7 +56,7 @@ def get_potential_matrix(start, goal, grid_size, params, func, minx=0, maxx=30):
 
 
 def potential_field_planning(start, goal, grid_size, params, func):
-	pmap, minx, miny = get_potential_matrix(start, goal, grid_size, params, func)
+	pmap, minx, miny = get_potential_matrix(goal, grid_size, params, func)
 	robot_path = Node(start.x, start.y)
 	move = []
 	directions = [0,1,1]	# move at max 1 step
@@ -94,32 +94,8 @@ def potential_field_planning(start, goal, grid_size, params, func):
 	return path, pmap
 
 
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Artificial Potential Function')
-	parser.add_argument('-g','--grid', type=float,
-						help='Grid size; Default=0.5')
-	parser.add_argument('-f','--function', type=str,
-						help='Attractive Potential function(p=paraboloid, c=conical); Default=c')
-	parser.add_argument('-a','--attractive', type=float,
-						help='Attractive Potential Gain; Default=1')
-	parser.add_argument('-r','--repulsive', type=float,
-						help='Repuslive Potential Gain; Default=5000')
-	args = parser.parse_args()
-
-	K = 1  # attractive potential gain
-	ETA = 5000.0  # repulsive potential gain
-	grid_size = 0.5
-	func = 'c'
-	if args.grid:
-		grid_size = args.grid
-	if args.function:
-		func = args.function
-	if args.attractive:
-		K = args.attractive
-	if args.repulsive:
-		ETA = args.repulsive
-
-
+def main(grid_size, func, ETA, K):
+	global obslist
 	start = Node(1,1)
 	goal = Node(20,20)
 	obslist = [(4.5, 3, 2), (3, 12, 2), (15, 15, 3)]  #[(x, y, radius)]
@@ -153,4 +129,26 @@ if __name__ == '__main__':
 	plt.legend()
 	plt.title('Configuration Space')
 	plt.savefig("./images/apf.png")
-	plt.show()
+	# plt.show()
+	return figure
+
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Artificial Potential Function')
+	parser.add_argument('-g','--grid', type=float,
+						help='Grid size; Default=0.5', default=0.5)
+	parser.add_argument('-f','--function', type=str,
+						help='Attractive Potential function(p=paraboloid, c=conical); Default=c', default='c')
+	parser.add_argument('-a','--attractive', type=float,
+						help='Attractive Potential Gain; Default=1', default=1)
+	parser.add_argument('-r','--repulsive', type=float,
+						help='Repuslive Potential Gain; Default=5000', default=5000)
+	args = parser.parse_args()
+
+	
+	grid_size = args.grid
+	func = args.function
+	K = args.attractive
+	ETA = args.repulsive
+
+	main(grid_size, func, ETA, K)

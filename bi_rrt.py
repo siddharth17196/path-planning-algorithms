@@ -21,7 +21,6 @@ def get_random_point(lc=0, rc=30):
 
 def merge_intersetion(node1, node2):
 	global obslist
-	trues = []
 	for obs in obslist:
 		dr = np.hypot(node2.x-node1.x, node2.y-node1.y)
 		D = (node1.x-obs[0])*(node2.y-obs[1]) - (node2.x-obs[0])*(node1.y-obs[1])
@@ -38,7 +37,7 @@ def get_new_point(rnd_point, old_point, delta=1):
 	theta = math.atan((old_point.y-rnd_point.y)/(old_point.x-rnd_point.x))
 	temp_p1 = Node(delta*math.cos(theta) + old_point.x, delta*math.sin(theta) + old_point.y)
 	temp_p2 = Node(-delta*math.cos(theta) + old_point.x, -delta*math.sin(theta) + old_point.y)
-	temp_tree = [temp_p1, temp_p1]
+	temp_tree = [temp_p1, temp_p2]
 	new_node = temp_tree[get_nearest_point(rnd_point, temp_tree)]
 	val = merge_intersetion(new_node, old_point)
 	if val and new_node.x >= 0 and new_node.y >=0 and new_node.x <= 30 and new_node.y <=30:
@@ -70,17 +69,8 @@ def merge(tree1, tree2):
 		path = None
 	return path
 
-
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Bi-Directional RRT')
-	parser.add_argument('-i','--iter', type=int,
-						help='Number of iterations (integer); Default=100')
-	args = parser.parse_args()
-	if args.iter:
-		max_iter = args.iter
-	else:
-		max_iter = 100
-
+def main(max_iter):
+	global obslist	
 	obslist = [(4.5, 3, 2), (3, 12, 2), (15, 15, 3)]  #[(x, y, radius)]
 	start_node = Node(1,1)
 	start_node.path_so_far.append(start_node)
@@ -99,7 +89,7 @@ if __name__ == '__main__':
 	if path:
 		figure, axes = plt.subplots()
 		plt.rcParams["figure.figsize"] = (20,20)
-		
+
 		# plotting the obstacles
 		for obs in obslist:
 			obstacle = plt.Circle((obs[0], obs[1]), obs[2], color="black")
@@ -113,8 +103,8 @@ if __name__ == '__main__':
 			x_cord = []
 			y_cord = []
 			for v in tree:
-				x_cord.append(v.x)
-				y_cord.append(v.y)
+					x_cord.append(v.x)
+					y_cord.append(v.y)
 			plt.scatter(x_cord, y_cord, c=[color[i]], label=lab[i])
 
 		# plotting path
@@ -133,4 +123,15 @@ if __name__ == '__main__':
 		plt.legend()
 		plt.title('Configuration Space')
 		plt.savefig("./images/bi_rrt.png")
-		plt.show()
+		# plt.show()
+		return figure
+
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Bi-Directional RRT')
+	parser.add_argument('-i','--iter', type=int,
+						help='Number of iterations (integer); Default=100', default=100)
+	args = parser.parse_args()
+	max_iter = args.iter
+
+	main(max_iter)
