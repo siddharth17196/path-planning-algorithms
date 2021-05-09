@@ -1,6 +1,13 @@
 # Path planning algorithms
- 
-## Bi-RRT
+
+### Visualization using Streamlit
+
+```bash
+streamlit run app.py
+```
+
+
+### Bi-RRT
 Creates random trees simulatneously from both, the start and goal.
 ```
 usage: bi_rrt.py [-h] [-i ITER]
@@ -14,8 +21,8 @@ optional arguments:
 
 ![birrt](./images/bi_rrt.png)
 
-## APF (Artificial Potential Function)
-Assigns a potential value to each cell in the grid which is the sum of the attractive 
+### APF (Artificial Potential Function)
+Assigns a potential value to each cell in the grid which is the sum of the attractive
 and repulsive potential strengths.
 
 ```
